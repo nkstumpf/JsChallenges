@@ -36,19 +36,21 @@
         }
 
         function whosFattest(a, b) {
-            if (a > b) {
+            if (a.bmi > b.bmi) {
                 console.log(a.firstName + " wins!");
-            } else if (a < b) {
+            } else if (a.bmi < b.bmi) {
                 console.log(b.firstName + " wins!");
             } else {
                 console.log("It's a draw.");
             }
         }
 
-        whosFattest(john.bmi, mark.bmi);
+        whosFattest(john, mark);
 
-        console.log(john.bmi());
-        console.log(mark.bmi());
+        console.log("John's BMI is " + john.bmi());
+        console.log("Mark's BMI is " + mark.bmi());
+
+        console.log(john, mark);
 
     </script>
     

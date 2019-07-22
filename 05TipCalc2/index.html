@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <script>
+
+            // instructions:
+
+            /* Johns family went to 5 different restaraunts. Their bills were:
+
+            $124
+            $48
+            $268
+            $100
+            $42
+
+            John tips 20% if the bill is < $50
+            15% if the bill is >$50 & < $200
+            10% if the bill is > $200
+
+            */
+
+            // Create an object with an array to store the bill values
+            // Add a method to calculate the tip
+            // This method should include a loop to iterate over all the paid bills and do the tip calculation
+            // As an output create a new array containing final paid ammounts (bill + tip)
+            // HINT: start with two empty arrays and fill them up using the loop
+
+            // Extra:
+
+            /* Marks family went to 4 different restaraunts Their bills were:
+
+            $77
+            $375
+            $110
+            $45
+
+            Mark tips 20% if the bill is < $100
+            10% if the bill is > $100 & < $300
+            25% if the bill is > $300
+
+            // create a function (not a method) that calculates the average of all the tips in an array
+            // calculate the average tip for each family
+            // log to the console which family paid the highest tips on average
+
+            */
+
+
+            // objects to hold data
+
+            johnFamily {
+                bills: [],
+                tips: [],
+
+            }
+
+            firstBill = 124;
+            secondBill = 48;
+            thirdBill = 268;
+
+            // calculates the tip
+
+            function tipCalc(x) {
+                if (x < 50) {
+                    let tip = x * 0.2;
+                    return tip.toFixed(2);
+                } else if (x > 50 && x < 200) {
+                    let tip = x * 0.15;
+                    return tip.toFixed(2);
+                } else if (x > 200) {
+                    let tip = x * 0.1;
+                    return tip.toFixed(2);
+                } else {
+                    console.log('I don\'t know how much to tip');
+                }
+            }
+
+            // adds all tips to tips array
+
+            tips = [parseInt(tipCalc(firstBill)), parseInt(tipCalc(secondBill)), parseInt(tipCalc(thirdBill))];
+
+            // adds tips to totals
+
+            firstTotal = firstBill + tips[0];
+            secondTotal = secondBill + tips[1];
+            thirdTotal = thirdBill + tips[2];
+
+            //  adds all totals to the array
+
+            totals = [firstTotal, secondTotal, thirdTotal];
+
+            console.log(tips);
+            console.log(totals);
+
+
+
+
+
+
+
+        </script>
+    </body>
+
+</html>
