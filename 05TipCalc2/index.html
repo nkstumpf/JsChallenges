@@ -55,49 +55,77 @@
 
             // objects to hold data
 
-            johnFamily {
-                bills: [],
+            // [76, 455, 46, 233, 134, 98, 50]
+
+            johnFamily = {
+                bills: [124, 48, 268, 100, 42],
                 tips: [],
+                totals: [],
+                johnTipCalc: function() { // for every value in the array "bills" check the following conditions and store the appropriate values to the arraay "tips":
+                    for (let i = 0; i < this.bills.length; i++) {
+
+                        if (this.bills[i] < 50) {
+                            let tip = this.bills[i] * 0.2;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else if (this.bills[i] > 50 && this.bills[i] < 200) {
+                            let tip = this.bills[i] * 0.15;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else if (this.bills[i] > 200) {
+                            let tip = this.bills[i] * 0.1;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else {
+                            console.log('unknown');
+                        }
+                    }
+                    
+                }
 
             }
 
-            firstBill = 124;
-            secondBill = 48;
-            thirdBill = 268;
+            johnFamily.johnTipCalc();
+            console.log(johnFamily.tips, johnFamily.totals);
+
+            // console.log(johnFamily.bills, johnFamily.tips);
 
             // calculates the tip
 
-            function tipCalc(x) {
-                if (x < 50) {
-                    let tip = x * 0.2;
-                    return tip.toFixed(2);
-                } else if (x > 50 && x < 200) {
-                    let tip = x * 0.15;
-                    return tip.toFixed(2);
-                } else if (x > 200) {
-                    let tip = x * 0.1;
-                    return tip.toFixed(2);
-                } else {
-                    console.log('I don\'t know how much to tip');
-                }
-            }
+            // function tipCalc(x) {
+            //     if (x < 50) {
+            //         let tip = x * 0.2;
+            //         return tip.toFixed(2);
+            //     } else if (x > 50 && x < 200) {
+            //         let tip = x * 0.15;
+            //         return tip.toFixed(2);
+            //     } else if (x > 200) {
+            //         let tip = x * 0.1;
+            //         return tip.toFixed(2);
+            //     } else {
+            //         console.log('I don\'t know how much to tip');
+            //     }
+            // }
 
             // adds all tips to tips array
 
-            tips = [parseInt(tipCalc(firstBill)), parseInt(tipCalc(secondBill)), parseInt(tipCalc(thirdBill))];
+            // tips = [parseInt(tipCalc(firstBill)), parseInt(tipCalc(secondBill)), parseInt(tipCalc(thirdBill))];
 
             // adds tips to totals
 
-            firstTotal = firstBill + tips[0];
-            secondTotal = secondBill + tips[1];
-            thirdTotal = thirdBill + tips[2];
+            // firstTotal = firstBill + tips[0];
+            // secondTotal = secondBill + tips[1];
+            // thirdTotal = thirdBill + tips[2];
 
             //  adds all totals to the array
 
-            totals = [firstTotal, secondTotal, thirdTotal];
+            // totals = [firstTotal, secondTotal, thirdTotal];
 
-            console.log(tips);
-            console.log(totals);
+            // console.log(tips);
+            // console.log(totals);
 
 
 
