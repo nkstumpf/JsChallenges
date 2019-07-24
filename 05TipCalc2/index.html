@@ -55,7 +55,6 @@
 
             // objects to hold data
 
-            // [76, 455, 46, 233, 134, 98, 50]
 
             johnFamily = {
                 bills: [124, 48, 268, 100, 42],
@@ -88,8 +87,70 @@
 
             }
 
+            markFamily = {
+                bills: [77, 475, 110, 45],
+                tips: [],
+                totals: [],
+                markTipCalc: function() { // for every value in the array "bills" check the following conditions and store the appropriate values to the arraay "tips":
+                    for (let i = 0; i < this.bills.length; i++) {
+
+                        if (this.bills[i] < 100) {
+                            let tip = this.bills[i] * 0.2;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else if (this.bills[i] > 100 && this.bills[i] < 300) {
+                            let tip = this.bills[i] * 0.15;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else if (this.bills[i] > 300) {
+                            let tip = this.bills[i] * 0.1;
+                            this.tips.push(tip);
+                            this.totals.push(this.bills[i] + tip);
+                            console.log(this.tips[i], this.totals[i]);
+                        } else {
+                            console.log('unknown');
+                        }
+                    }
+                }
+            }
+
             johnFamily.johnTipCalc();
-            console.log(johnFamily.tips, johnFamily.totals);
+            markFamily.markTipCalc();
+            console.log("Johns tips were: " + johnFamily.tips);
+            console.log("Johns totals were: " + johnFamily.totals);
+            console.log("Marks tips were: " + markFamily.tips);
+            console.log("Marks totals were: " + markFamily.totals);
+
+
+            // add a function that calulates the average tip from ana array of tips
+
+            function tipAvr(array) {
+                let total = 0;
+                 for (let i = 0; i < array.length; i++) {
+                     total += array[i];
+                 }
+                 console.log("Total tips paid: $" + total);
+                 return "$" + total / array.length;
+            }
+
+            let johnTotalTipsAvr = tipAvr(johnFamily.tips);
+            let markTotalTipsAvr = tipAvr(markFamily.tips);
+
+            // add a function that compares which family paid higher tips on average
+
+            function compareTips(a, b) {
+                if (a > b) {
+                    console.log("John paid more in tips with an average of: " + johnTotalTipsAvr);
+                } else if (b > a) {
+                    console.log("Mark paid more in tips with an average of: " + markTotalTipsAvr);
+                } else {
+                    console.log("They both paid the same.");
+                } 
+            }
+
+            compareTips(johnTotalTipsAvr, markTotalTipsAvr);
 
             // console.log(johnFamily.bills, johnFamily.tips);
 
