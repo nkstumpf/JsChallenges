@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+var count = 0;
+
+function cc(card) {
+
+// if the card = 2,3,4,5,6 count ++
+// if 7,8,9 count stays same
+// if the card = 10,A,J,K,Q count --
+
+  switch (card) {
+    case 2:
+    count += 1;
+    case 3:
+    count += 1;
+    case 4:
+    count += 1;
+    case 5:
+    count += 1;
+    case 6:
+    count += 1;
+    case 10:
+    count -= 1;
+    case 'A':
+    count -= 1
+    case 'J':
+    count -= 1
+    case 'K':
+    count -= 1
+    case 'Q':
+    count -= 1
+    console.log(count);
+    break;
+  }
+
+  function shouldBet() {
+    if (count > 0) {
+      return count + "Bet";
+    } else return count + "Hold";
+  }
+}
+
+// Add/remove calls to test your function.
+
+// Note: Only the last will display
+cc(2,3,4,5,6); 
+// cc(3); 
+// cc(7); 
+// cc('K'); 
+// cc('A');
+    </script>
+    
+</body>
+</html>
