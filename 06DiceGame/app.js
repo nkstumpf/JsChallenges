@@ -12,12 +12,12 @@ GAME RULES:
 /*
 ADDITIONAL CHALLENGES:
 
-- Add a game condition where if a player rolls a 6 twice in a row they lose ALL their points
+- !DONE! Add a game condition where if a player rolls a 6 twice in a row they lose ALL their points !DONE!
 - Add an input field to the game where players can set their own winning score
 - Add an additional Dice to the game and a condition where if EITHER dice is a 1 the player rolling loses their current score
 */ 
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, doubleSix;
 
 init();
 
@@ -37,14 +37,36 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         diceDOM.src = 'dice-' + dice + '.png';
 
         // 3. Update the round score IF the rolled number was NOT 1
-        if (dice !== 1) {
-            // add score
+        if (dice !== 1 && dice === 6 && doubleSix > 0 && inDanger === activePlayer) {
+            // lose all your points
+            roundScore = 0;
+            scores[activePlayer] = 0;
+            document.querySelector('#current-' + activePlayer).textContent = roundScore; 
+            document.getElementById('score-' + activePlayer).textContent = 0;
+            console.log('you rolled double sixes you lose all your points!' + activePlayer);
+            nextPlayer();
+    
+        } else if (dice !== 1 && dice === 6) {
+            doubleSix = 1; // make doubleSix variable = 1
+            inDanger = activePlayer; // log which player is active when a 6 is rolled
+            console.log(inDanger);
+            console.log('You rolled a six... be careful!');
             roundScore += dice;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
+
+        } else if (dice !== 1) {
+            // add score
+            roundScore += dice;
+            doubleSix = 0;
+            // inDanger
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+            console.log('normal dice roll');
         } else {
             // IF you roll a "1" go to the next player
             nextPlayer();
+            console.log('next players turn');
         }
+       
     }
 });
 
@@ -114,12 +136,12 @@ function init() {
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
 
-    document.querySelector('.player-o-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('winner');
     document.querySelector('.player-1-panel').classList.remove('winner');
 
-    document.querySelector('.player-o-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-1-panel').classList.remove('active');
-    document.querySelector('.player-o-panel').classList.add('active');
+    document.querySelector('.player-0-panel').classList.add('active');
 
 };
 
