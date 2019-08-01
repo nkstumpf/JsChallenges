@@ -17,7 +17,7 @@ ADDITIONAL CHALLENGES:
 - Add an additional Dice to the game and a condition where if EITHER dice is a 1 the player rolling loses their current score
 */ 
 
-var scores, roundScore, activePlayer, gamePlaying, doubleSix;
+var scores, roundScore, activePlayer, gamePlaying, doubleSix, winScore;
 
 init();
 
@@ -83,12 +83,12 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     // check if player won the game
 
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= winScore) { // make the integer here a variable that can be set by the player via an html input field
         // player wins the game
         document.getElementById('name-' + activePlayer).textContent = 'Winner!';
         document.querySelector('.dice').style.display = 'none';
-        document.querySelector('.player-' + activePlayer).classList.add('winner');
-        document.querySelector('.player-' + activePlayer).classList.remove('active');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
         gamePlaying = false;
     } else {
         // go to the next player
@@ -97,6 +97,14 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
     }
 
 });
+
+// button to set winning score manually
+
+document.querySelector('.set-score-btn').addEventListener('click', function() {
+    var userInput = document.querySelector('.winning-score');
+    winScore = userInput.value;
+    console.log(winScore);
+})
 
 // reusable funtion to activate the next players turn
 
@@ -117,6 +125,12 @@ function nextPlayer() {
 document.querySelector('.btn-new').addEventListener('click', init);
 
 function init() {
+    // add a prompt to allow players to set their own winning score
+    // winScore = parseInt(prompt('Set winning score:'));
+    // console.log(winScore);
+
+    winScore = 100; // default winning score
+
     scores = [0, 0];
     activePlayer = 0;
     roundScore = 0;
