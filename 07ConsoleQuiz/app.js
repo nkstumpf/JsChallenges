@@ -13,7 +13,6 @@ var quiz = {
     answers: [
         'Dom Perignon',
         'Lake Superior',
-        'The Moon',
         'Farrier',
         'Makintosh',
         'Sword',
@@ -23,7 +22,6 @@ var quiz = {
         'Louis Pasteur'
     ]
 }
-
 
 // create a function constructor called "question"
 // question should include the q
@@ -72,10 +70,77 @@ var myQuestions = [
 
 // select one random question and log it the console together with the possible answers
 
-function randomQuestion(arr) {
-    x = Math.floor(Math.random() * 10);
-    console.log(arr[x]);
-}
+// function randomQuestion(arr) {
+//     x = Math.floor(Math.random() * 10);
+//     selected = arr[x];
+//     return console.log('The current question is: ' + selected.question);
+// }
 
-// use the prompt function to ask the user for the correct answer
+// randomQuestion(myQuestions);
 
+// when the user clicks the start button
+
+// global variable that stores the current question value
+
+var theQuestion = '';
+console.log('The current Question is: ' + theQuestion);
+
+var currentQuestion = document.getElementById('question');
+var emptyDiv = document.getElementById('answer-choices');
+var hideMe = document.getElementById('hide-me');
+
+document.getElementById('btn-start').addEventListener('click', function() {
+    var startBtn = document.getElementById('btn-start');
+    startBtn.textContent = 'Next Question';
+    hideMe.style.display = 'none';
+    console.log('Start game button has been pressed');
+    console.log('Start button text changed to "Next Question".');
+
+    // call the random question
+    randomQuestion(myQuestions);
+
+    function randomQuestion(arr) {
+        x = Math.floor(Math.random() * 10);
+        selected = arr[x];
+        currentQuestion.textContent = selected.question;
+        console.log('The current question is: ' + selected.question);
+        theQuestion = selected.question;
+        emptyDiv.innerHTML = `
+        <p>Answer Choices:</p>
+        <ul style="list-style-type: decimal">
+            <li>${quiz.answers[0]}</li>
+            <li>${quiz.answers[1]}</li>
+            <li>${quiz.answers[2]}</li>
+            <li>${quiz.answers[3]}</li>
+            <li>${quiz.answers[4]}</li>
+            <li>${quiz.answers[5]}</li>
+            <li>${quiz.answers[6]}</li>
+            <li>${quiz.answers[7]}</li>
+            <li>${quiz.answers[8]}</li>
+        </ul>`
+        return theQuestion;
+    }   
+})
+
+// submit the users input and check if the answer is correct
+
+document.getElementById('btn-submit').addEventListener('click', function() {
+    var userInput = document.getElementById('user-input').value;
+    console.log('the users answer was: ' + userInput);
+    console.log('the correct answer is: ' + selected.correctAnswer);
+
+    if (userInput === selected.correctAnswer) {
+        currentQuestion.textContent = 'Thats Correct!';
+        console.log('Thats correct!');
+    } else {
+        console.log('sorry you suck too much ass');
+    }
+})
+
+
+// reset button
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+    location.reload();
+    console.log('game has been reset');
+})

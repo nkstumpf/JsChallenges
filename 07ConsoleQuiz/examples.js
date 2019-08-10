@@ -1,4 +1,4 @@
-// Standard object creation
+// OBJECTS
 
 var newCar = {
     make: 'hyundai',
@@ -7,7 +7,8 @@ var newCar = {
     color: 'black'
 }
 
-// Constructor creation
+// CONSTRUCTORS
+// A constructor is a template of an object used to create other similar objects
 
 var Car = function(make, model, year, color) { // Capitolization signifies a contructor function
     this.make = make; // Declaration of variables represent the functions undetermined future arguments
@@ -21,21 +22,32 @@ var Car = function(make, model, year, color) { // Capitolization signifies a con
 
 // Creating a new object from a constructor template
 // "Instanciation" the new object is an "instance" of the constructor template
+
 // the importance of the "new" keyword is mostly that it points the "this" variable to the new empy object instead of the global variable
 
 var oldCar = new Car('mazda', 'mazda3', '2016', 'space gray');
 var yourCar = new Car('toyota', 'rav4', 2018, 'white'); // the "new" keyword signifies the creation of an instance 
 console.log(yourCar); // see example in console
 
-// the prototype property
-// can be used to add inheritable methods and properties to ALL instances of the original constructor
+// PROTOTYPES
 
-// inheritable method
+/* * each and every object in javascript has a prototype property
+
+if you call a method on an object the JS interpreter will first look in the prototype property of that particular object- if no method is found it will then look to that objects parent and so on and so forth all the way to the global "object" prototype at which point if no method is found it will return "NULL" because it did not find anything all the way up the chain. This is how any function in JS is able to use any global method
+
+can be used to add inheritable methods and properties to ALL instances of the original constructor
+*/
+
+// INHERITANCE
+
+// inheritance is when one object is based on another object gets access to another objects propterties and methods
+
+// inheritable method example
 Car.prototype.calculateAge = function () {
     console.log(2019 - this.year);
 }
 
-// inheritable property
+// inheritable property example
 Car.prototype.engineType = '4 cylynder';
 
 // Object.create
