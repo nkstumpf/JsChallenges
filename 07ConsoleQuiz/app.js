@@ -88,11 +88,14 @@ console.log('The current Question is: ' + theQuestion);
 var currentQuestion = document.getElementById('question');
 var emptyDiv = document.getElementById('answer-choices');
 var hideMe = document.getElementById('hide-me');
+var score;
 
 document.getElementById('btn-start').addEventListener('click', function() {
     var startBtn = document.getElementById('btn-start');
     startBtn.textContent = 'Next Question';
     hideMe.style.display = 'none';
+    score = 0;
+    loadScore();
     console.log('Start game button has been pressed');
     console.log('Start button text changed to "Next Question".');
 
@@ -122,6 +125,14 @@ document.getElementById('btn-start').addEventListener('click', function() {
     }   
 })
 
+// function for dynamically generating the score element
+
+var loadScore = function() {
+    document.getElementById('score').innerHTML = `
+    <h4>Score: ${score}</h4>
+    `
+}
+
 // submit the users input and check if the answer is correct
 
 document.getElementById('btn-submit').addEventListener('click', function() {
@@ -131,6 +142,8 @@ document.getElementById('btn-submit').addEventListener('click', function() {
 
     if (userInput === selected.correctAnswer) {
         currentQuestion.textContent = 'Thats Correct!';
+        score++
+        loadScore();
         console.log('Thats correct!');
     } else {
         console.log('sorry you suck too much ass');
