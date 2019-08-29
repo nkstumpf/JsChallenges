@@ -433,6 +433,166 @@ function AnotherFamilyMember(firstName = 'Jane', lastName = 'Doe', yearOfBirth =
 var anotherRandomPerson = new AnotherFamilyMember();
 
 
+/////////////////////////
+// MAPS
+/////////////////////////
+
+// Hash mapping: new key/ value data structure in ES6
+
+/*
+
+Map is a contructor function that take creates a data structure out of key / value pairs that you "set" to it and then maps those pairs to an array
+
+*/
+
+const question = new Map();
+
+
+// set method
+// used to set the data
+question.set('question', 'What is the official name of the latest major javascript version?'); // key - value pair
+
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set(5, 'I will be deleted');
+question.set('correct', 3);
+question.set(true, 'Correct!');
+question.set(false, 'Nope :(');
+
+// get method
+// used to retrieve the data
+console.log(question.get('question'));
+console.log(question.get(1));
+
+// other useful methods
+
+// size method
+// used to retrieve the "size" of the map structure (number of entries)
+console.log(question.size);
+
+// delete method 
+// deletes data from the structure
+question.delete(5);
+
+// has method
+// checks if the data structure "has" an certain element
+if (question.has(4)) {
+    console.log('I have this!');
+} else console.log('I don\'t have this');
+
+// clear method
+// clears all data from the structure
+// question.clear();
+
+// Iterating through map using forEach
+
+// question.forEach((value, key) =>
+//     console.log(`this is ${key}, and it\'s value is set to ${value}`));
+
+// For of loop
+
+// ****** GO BACK AND REVIEW THIS *******
+
+// we can accomplish the same result using a for of loop.
+
+/* 
+
+In this block of code we are looping through the data structure. Destructuring (the bracket notation) is used to target the data we want - the key and value pairs of all question entries. Then we are saying "if the type of value stored inside key is a number execute this code"
+
+*/
+
+for (let [key, value] of question.entries()) {
+    if (typeof(key) === 'number') {
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+// prompting for our quiz answer
+
+/* 
+
+what this block of code is doing is saying set a constant to the variable name "answer" and store within it a prompt (user input) that asks you to input the correct answer and then stores that input to the variable. 
+
+Below that is a line that says "go get..." a string within the data structure called "correct" and that equals (===) the correct answer
+
+*/
+
+const answer = parseInt(prompt('Please enter the correct answer'));
+    question.get(answer === question.get('correct'));
+
+
+/////////////////////////
+// CLASSES
+/////////////////////////
+
+
+// ES5 example:
+
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfbirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear - this.yearOfBirth;
+    console.log(age);
+}
+
+// Classes are just the ES6 way of creating constructor funtions
+ 
+/* Main diferences between classes in ES6 and constructors is ES5 are:
+
+1. No hoisting in classes
+2. Can only use methods with classes not properties
+
+*/
+
+/////////////////////////
+// SUB CLASSES
+/////////////////////////
+
+
+// ES5 example:
+
+// Super Class
+
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfbirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+// Sub Class
+var Athlete5 = function(name, yearOfBirth, job, olympicGames, medals) {
+
+    Person5.call(this, name, yearOfBirth, job);
+
+    /* 
+    
+    Here we are "calling" the Person class and asigning the "this" keyword to point to Athlete5. Otherwise it will point to an empty object?
+
+    */
+
+    this.olympicGames = olympicGames;
+    this.medals = medals;
+
+    // Then we set the other properties as usual
+
+}
+
+Athlete5.prototype = Object.create(Person5.prototype);
+
+// This line "connects" the athlete subclass to the person class so that they can share the same prototype
+
+
 
 
 
