@@ -557,7 +557,7 @@ Person5.prototype.calculateAge = function() {
 
 // ES5 example:
 
-// Super Class
+// Constructor function ie: class
 
 var Person5 = function(name, yearOfBirth, job) {
     this.name = name;
@@ -565,10 +565,15 @@ var Person5 = function(name, yearOfBirth, job) {
     this.job = job;
 }
 
+// add a method to the new objects prototype:
+
 Person5.prototype.calculateAge = function() {
     var age = new Date().getFullYear() - this.yearOfBirth;
     console.log(age);
 }
+
+// create a new person using the class
+var john5 = new Person5('John', 1990, 'teacher');
 
 // Sub Class
 var Athlete5 = function(name, yearOfBirth, job, olympicGames, medals) {
@@ -592,6 +597,18 @@ Athlete5.prototype = Object.create(Person5.prototype);
 
 // This line "connects" the athlete subclass to the person class so that they can share the same prototype
 
+
+// ES6 example:
+
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    } // no punctuation needed here
+
+    calculateAge()
+}
 
 
 
