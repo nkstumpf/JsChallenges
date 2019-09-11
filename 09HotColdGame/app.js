@@ -14,13 +14,17 @@ You are going to create a Hot or Cold game. The game will take a guess (a number
 
 */
 
+/*************************************** 
+ Everything works now EXCEPT the computer doesnt understand what to do if you overshoot the target number. 
+*/
+
 // call function to initialize game:
 
 initializeGame();
 
 // declare global variables here to keep code organized
 
-var newGame, randomNum, userGuess, hotColdScale, btn, inputField;
+var newGame, randomNum, userGuess, btn, inputField, remainder;
 
 // function that resets the "newGame" variable and initialized the game
 
@@ -57,16 +61,18 @@ btn.addEventListener('click', function check() {
 
             // make this a function
             alert('Nope');
-            tooCold = true;
-            console.log('too cold? = ' + tooCold);  
+            remainder = randomNum - userGuess;
+            console.log('too cold'); 
+            console.log('the difference between your guess and the random number is ' + remainder); 
             newGame = false;
         
         } else if (userGuess > randomNum) {
 
             // make this a function
             alert('Nope');
-            tooHot = true;
-            console.log('too hot? = ' + tooHot);
+            remainder = userGuess - randomNum;
+            console.log('too hot');
+            console.log('the difference between your guess and the random number is ' + remainder);  
             newGame = false;
             
         } else {
@@ -80,15 +86,35 @@ btn.addEventListener('click', function check() {
         userGuess = document.querySelector('.guess').value;
         console.log('the user guessed... ' + userGuess);
 
-        if (tooCold === true) {
-            console.log('too cold was executed!');
+
+        // this logic determines if the guess is higher or lower than the previous guess
+
+        if (userGuess < randomNum && (randomNum - userGuess) < remainder) { // guess is low && lower than previous guess
+            remainder = randomNum - userGuess;
+            console.log('wamer');
+            console.log('the difference between your guess and the random number is ' + remainder); 
             // insert function from above
               
-        } else if (tooHot === true) {
-            console.log('too hot was executed!');
+        } else if (userGuess < randomNum && (randomNum - userGuess) < remainder) { // guess is low && higher than prev
+            remainder = randomNum - userGuess;
+            console.log('colder');
+            console.log('the difference between your guess and the random number is ' + remainder); 
+            // insert function from above
+            
+        } else if (userGuess > randomNum && (userGuess - randomNum) > remainder) { // guess is high && higher than prev
+            remainder = userGuess - randomNum;
+            console.log('colder2');
+            console.log('the difference between your guess and the random number is ' + remainder); 
             // insert function from above 
 
+        } else if (userGuess > randomNum && (userGuess - randomNum) < remainder) { // guess is high && lower than prev
+            remainder = userGuess - randomNum;
+            console.log('warmer2');
+            console.log('the difference between your guess and the random number is ' + remainder); 
+            // insert function from above 
+            
         } else {
+            alert('You Win!');
             console.log('you win')
             // you win
         }
@@ -102,5 +128,17 @@ btn.addEventListener('click', function check() {
 
 // need to figure out a scalable way to tell the computer WHERE on a scale from cold to hot the users guess is so that I can deliver the message "warmer" or "colder".
 
+// all possibilities
 
+
+
+// 1. user guess is correct
+// 2. user guess is too high
+// 3. user guess is too low
+
+//     4. user guess is lower than before but still too high
+//     5. user guess is higher than before but still too low
+//     6  user guess is higher than before but now TOO high (they overshot)
+//     7. user guess is lower than before but now TOO low (they overshot)
+//     6. user guess is correct
 
