@@ -68,19 +68,6 @@ var newGameBtn, resetBtn, userInput, elephant, monkey, giraffe, panda, elephant2
 newBtn = document.getElementById('newBtn');
 resetBtn = document.getElementById('resetBtn');
 
-tileA = document.getElementsByClassName("word")[0].innerHTML; // Elephant
-tileS = document.getElementsByClassName("word")[1].innerHTML; // Giraffe
-tileD = document.getElementsByClassName("word")[2].innerHTML; // Monkey
-tileF = document.getElementsByClassName("word")[3].innerHTML; // Elephant2
-tileJ = document.getElementsByClassName("word")[4].innerHTML; // Monkey2
-tileK = document.getElementsByClassName("word")[5].innerHTML; // Panda
-tileL = document.getElementsByClassName("word")[6].innerHTML; // Giraffe2
-tileX = document.getElementsByClassName("word")[7].innerHTML; // Panda2
-
-var animals = [tileA, tileS, tileD, tileF, tileJ, tileK, tileL, tileX,];
-
-// console.log(animals);
-
 // event handlers
 
 newBtn.addEventListener('click', function () {
@@ -99,6 +86,94 @@ resetBtn.addEventListener('click', function () {
 
 });
 
+// game logic
+
+function checkCardNG() {
+
+    switch(userInput) {
+        case 'A':
+            findAnimal(elephant, 0);
+            elephant = true;
+            newGame = false;
+            break;
+        case 'S':
+            findAnimal(giraffe, 1);
+            giraffe = true;
+            newGame = false;
+            break;
+        case 'D':
+            findAnimal(monkey, 2);
+            monkey = true;
+            newGame = false;
+            break;
+        case 'F':
+            findAnimal(elephant, 3);
+            elephant2 = true;
+            newGame = false;
+            break;
+        case 'J':
+            findAnimal(monkey, 4);
+            monkey2 = true;
+            newGame = false;
+            break;
+        case 'K':
+            findAnimal(panda, 5);
+            panda = true;
+            newGame = false;
+            break;
+        case 'L':
+            findAnimal(giraffe, 6);
+            giraffe2 = true;
+            newGame = false;
+            break;
+        case ';':
+            findAnimal(panda, 7);
+            panda2 = true;
+            newGame = false;
+            break;    
+    };
+}
+
+function checkCard() {
+
+    switch(userInput) {
+        case 'A':
+            findAnimal(elephant, 0);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'S':
+            findAnimal(giraffe, 1);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'D':
+            findAnimal(monkey, 2);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'F':
+            findAnimal(elephant, 3);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'J':
+            findAnimal(monkey, 4);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'K':
+            findAnimal(panda, 5);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case 'L':
+            findAnimal(giraffe, 6);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;
+        case ';':
+            findAnimal(panda, 7);
+            setTimeout(function(){ alert("Not a match"); }, 500);
+            break;    
+    };
+
+    setTimeout(function(){ location.reload();; }, 2000);
+};
+
 newGame();
 
 document.onkeypress = function (event) {
@@ -107,48 +182,7 @@ document.onkeypress = function (event) {
 
     if (newGame === true) {
 
-        switch(userInput) {
-            case 'A':
-                findAnimal(elephant, 0);
-                elephant = true;
-                newGame = false;
-                break;
-            case 'S':
-                findAnimal(giraffe, 1);
-                giraffe = true;
-                newGame = false;
-                break;
-            case 'D':
-                findAnimal(monkey, 2);
-                monkey = true;
-                newGame = false;
-                break;
-            case 'F':
-                findAnimal(elephant, 3);
-                elephant2 = true;
-                newGame = false;
-                break;
-            case 'J':
-                findAnimal(monkey, 4);
-                monkey2 = true;
-                newGame = false;
-                break;
-            case 'K':
-                findAnimal(panda, 5);
-                panda = true;
-                newGame = false;
-                break;
-            case 'L':
-                findAnimal(giraffe, 6);
-                giraffe2 = true;
-                newGame = false;
-                break;
-            case ';':
-                findAnimal(panda, 7);
-                panda2 = true;
-                newGame = false;
-                break;    
-        };
+        checkCardNG();
 
     } else {
 
@@ -157,60 +191,56 @@ document.onkeypress = function (event) {
         console.log('YOU GOT A MATCH!');
         findAnimal(elephant, 0);
         findAnimal(elephant, 3);
-        alert('MATCH!');
+        setTimeout(function(){ alert("MATCH!"); }, 500);
+        setTimeout(function(){ location.reload();; }, 2000);
+
     } else if (giraffe === true && userInput === 'L' || giraffe2 === true && userInput === 'S') {
         // match
         console.log('YOU GOT A MATCH!');
         findAnimal(giraffe, 1);
         findAnimal(giraffe, 6);
-        alert('MATCH!');
+        setTimeout(function(){ alert("MATCH!"); }, 500);
+        setTimeout(function(){ location.reload();; }, 2000);
+
     } else if (monkey === true && userInput === 'J' || monkey2 === true && userInput === 'D') {
         // match
         console.log('YOU GOT A MATCH!');
         findAnimal(monkey, 2);
         findAnimal(monkey, 4);
-        alert('MATCH!');
+        setTimeout(function(){ alert("MATCH!"); }, 500);
+        setTimeout(function(){ location.reload();; }, 2000);
+
     } else if (panda === true && userInput === ';' || panda2 === true && userInput === 'K') {
         // match
         console.log('YOU GOT A MATCH!');
         findAnimal(panda, 5);
         findAnimal(panda, 7);
-        alert('MATCH!');
+        setTimeout(function(){ alert("MATCH!"); }, 500);
+        setTimeout(function(){ location.reload();; }, 2000);
+
     } else if (elephant === true && userInput !== 'F' || elephant2 === true && userInput !== 'A' ) {
 
-        switch(userInput) {
-            case 'A':
-                findAnimal(elephant, 0);
-                break;
-            case 'S':
-                findAnimal(giraffe, 1);
-                break;
-            case 'D':
-                findAnimal(monkey, 2);
-                break;
-            case 'F':
-                findAnimal(elephant, 3);
-                break;
-            case 'J':
-                findAnimal(monkey, 4);
-                break;
-            case 'K':
-                findAnimal(panda, 5);
-                break;
-            case 'L':
-                findAnimal(giraffe, 6);
-                break;
-            case ';':
-                findAnimal(panda, 7);
-                break;    
-        };
-        alert('Not a match');
+        console.log('elephant logic loop entered');
+        checkCard();
     
-    } else
-        // reset game
-        console.log('Nope try again...')
+    } else if (giraffe === true && userInput !== 'L' || giraffe2 === true && userInput !== 'S') {
 
+        console.log('giraffe logic loop entered');
+        checkCard();
+    
+    } else if (monkey === true && userInput !== 'J' || monkey2 === true && userInput !== 'D') {
+
+        console.log('monkey logic loop entered');
+        checkCard();
+   
+    } else if (panda === true && userInput !== ';' || panda2 === true && userInput !== 'K') {
+
+        console.log('panda logic loop entered');
+        checkCard();
         
+    } else
+        // test: if there is an unexpected outcome log an error to the console
+        console.log('logic error');      
     }
 
 };
@@ -271,3 +301,16 @@ The attribute value can be any string
 Note: Custom attributes prefixed with "data-" will be completely ignored by the user agent.
 
 */
+
+// tileA = document.getElementsByClassName("word")[0].innerHTML; // Elephant
+// tileS = document.getElementsByClassName("word")[1].innerHTML; // Giraffe
+// tileD = document.getElementsByClassName("word")[2].innerHTML; // Monkey
+// tileF = document.getElementsByClassName("word")[3].innerHTML; // Elephant2
+// tileJ = document.getElementsByClassName("word")[4].innerHTML; // Monkey2
+// tileK = document.getElementsByClassName("word")[5].innerHTML; // Panda
+// tileL = document.getElementsByClassName("word")[6].innerHTML; // Giraffe2
+// tileX = document.getElementsByClassName("word")[7].innerHTML; // Panda2
+
+// var animals = [tileA, tileS, tileD, tileF, tileJ, tileK, tileL, tileX,];
+
+// console.log(animals);
