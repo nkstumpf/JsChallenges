@@ -88,7 +88,7 @@ var anotherNewCar = Object.create(carProto, {
 - A function is an instance of the object type 
 - A function behaves like any other object
 - We can store functions in a variable
-- We can pass a function as an argumnet to another function
+- We can pass a function as an argumnent to another function
 - We can return a function from a function
 
 In computer science, a programming language is said to support "first-class functions" (or function literal) if it treats functions as first-class objects. Specifically, this means that the language supports constructing new functions during the execution of a program, storing them in data structures, passing them as arguments to other functions, and returning them as the values of other functions.
