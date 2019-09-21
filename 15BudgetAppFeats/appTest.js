@@ -67,6 +67,7 @@ var budgetController = (function() {
 
         budget: 0,
         percentage: -1,
+        default: 0
   
     };
     ////////////////////////////////////////////
@@ -228,39 +229,194 @@ var UIController = (function() {
         dateLabel: '.budget__title--month'
     };
 
-    //////////// CHALLENGE #1 NUMBER FORMATTING ///////////////////
+//////////////////////// CHALLENGE #1 NUMBER FORMATTING ////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-   var formatNumber = function(num, type) {
-    var numSplit, int, dec, type;
+function formatNumber(num, type) {
+    console.log('button was clicked');
+    var num, numSet1, numSet2, numSet3, numSet4, int, dec, splitDecimal, result, typeStr;
 
-// using the "absolute" method
-num = Math.abs(num);
-// and then the "toFixed" method
-num = num.toFixed(2);
+    num = num.toFixed(2);
+    splitDecimal = num.split('.');
+    int = splitDecimal[0];
+    dec = splitDecimal[1];
 
-numSplit = num.split('.');
+    console.log('the number is: ' + int);
+    console.log('the number of characters is: ' + int.length);
+    console.log('the decimal is: .' + dec);
 
-// places the comma at the correct spot you specify
-int = numSplit[0];
-if (int.length > 3) {
-    int = int.substr(0, int.length - 3) + ',' + int.substr(int.length -3, 3);
-}
 
-dec = numSplit[1];
+    //////////////////////// CHALLENGE #2 FIX -0.00 BUG ////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    // this is what is causing the displayBudget function to display "-0.00" on init
+    // because 0 is inherently "fasly" the ternary operator was evaluating to be an "exp" every time init ran
 
-        //////////////////////// CHALLENGE #2 FIX -0.00 BUG ///////////////////////////////
-        // this is what is causing the displayBudget function to display "-0.00" on init
-        // because 0 is inherently "fasly" the ternary operator was evaluating to be an "exp" every time init ran
+    function getTypeStr() {
+      if (type === 'exp') {
+          console.log('check type ran exp');
+          typeStr = '-' + ' ';
+          return typeStr;
+      } else if (type === 'inc') {
+          console.log('check type ran inc');
+          typeStr = '+' + ' ';
+          return typeStr;
+      } else if (type === 'default') {
+          typeStr = '';
+          return typeStr;
+      }
+    };
 
-        if (type === 'exp') {
-            return '-' + ' ' + int + '.' + dec;
-        } else if (type === 'inc') {
-            return '+' + ' ' + int + '.' + dec;
-        } else if (type === 'default') { // changed this line TEST
-            return int + '.' + dec;
-        }
 
-};
+
+    function uptoThousand() {
+
+        getTypeStr();
+
+        result = typeStr + num;
+        return result;
+    };
+
+    function thousands(intPos, substr) {
+
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec; // return
+        return result;
+
+    };
+
+    function tensThousands(intPos, intPos2, substr) {
+
+        numSet1 = int[intPos] + int[intPos2];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec; // return
+        return result;
+
+    };
+
+    function hundredsThousands(intPos, intPos2, intPos3, substr) {
+
+        numSet1 = int[intPos] + int[intPos2] + int[intPos3];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec;
+        return result;
+
+    };
+
+    function millions(intPos, substr, substr2, substrConst){
+        
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+        return result;
+
+    };
+
+    function tensMillions(intPos, intPos2, substr, substr2, substrConst){
+
+        numSet1 = int[intPos] + int[intPos2];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+        return result;
+
+    };
+
+    function hundredsMillions(intPos, intPos2, intPos3, substr, substr2, substrConst){
+        
+        numSet1 = int[intPos] + int[intPos2] + int[intPos3];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+        
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+        return result;
+
+    };
+
+    function billions(intPos, substr, substr2, substr3, substrConst){
+
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+        numSet4 = int.substr(substr3, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+        return result;
+
+    };
+
+    // if number is in the thousands (2,500)
+    if (int.length === 4) {
+
+        thousands(0, 1);
+
+    // if the number is in the tens of thousands (49,578)  
+    } else if (int.length === 5) {
+
+        tensThousands(0, 1, -3);
+
+    // if the number is in the hundreds of thousands (495,789)  
+    } else if (int.length === 6) {
+
+        hundredsThousands(0, 1, 2, -3);
+
+    // if the number is in the millions (4,957,892)
+    } else if (int.length === 7) {
+
+        millions(0, 1, 4, 3);
+
+    // if number is in the tens of millions (49,578,942)  
+    } else if (int.length === 8) {
+
+        tensMillions(0, 1, 2, 5, 3);
+
+    // if number is in the hundreds of millions (249,578,942)  
+    } else if (int.length === 9) {
+
+        hundredsMillions(0, 1, 2, 3, 6, 3);
+
+      // if the number is in the billions (2,495,789,427) 
+    } else if (int.length === 10) {
+
+        billions(0, 1, 3, 6, 3);
+
+    } else if (int.length > 10) {
+
+        console.log('Yea like you make that much...');
+
+    } else {
+
+        console.log('else triggered');
+        uptoThousand();
+    }
+    
+    return result;
+
+  };
+  
+////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////
 
     // Node List forEach function
 
@@ -345,13 +501,17 @@ dec = numSplit[1];
             var type;
 
             ///////// CHALLENGE #2 CHANGE THE IF STATEMENT HERE /////////
+
             
             if (obj.budget === 0) {
                 type = 'default';
+                console.log('type = ' + type);
             } else if (obj.budget > 0) {
                 type = 'inc';
+                console.log('type = ' + type);
             } else if (obj.budget < 0) {
                 type = 'exp';
+                console.log('type = ' + type);
             }
 
             document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
