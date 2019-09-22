@@ -231,22 +231,22 @@ var UIController = (function() {
     //////////// CHALLENGE #1 NUMBER FORMATTING ///////////////////
 
    var formatNumber = function(num, type) {
-    var numSplit, int, dec, type;
+        var numSplit, int, dec, type;
 
-// using the "absolute" method
-num = Math.abs(num);
-// and then the "toFixed" method
-num = num.toFixed(2);
+        // using the "absolute" method
+        num = Math.abs(num);
+        // and then the "toFixed" method
+        num = num.toFixed(2);
 
-numSplit = num.split('.');
+        numSplit = num.split('.');
 
-// places the comma at the correct spot you specify
-int = numSplit[0];
-if (int.length > 3) {
-    int = int.substr(0, int.length - 3) + ',' + int.substr(int.length -3, 3);
-}
+        // places the comma at the correct spot you specify
+        int = numSplit[0];
+        if (int.length > 3) {
+            int = int.substr(0, int.length - 3) + ',' + int.substr(int.length -3, 3);
+        }
 
-dec = numSplit[1];
+        dec = numSplit[1];
 
         //////////////////////// CHALLENGE #2 FIX -0.00 BUG ///////////////////////////////
         // this is what is causing the displayBudget function to display "-0.00" on init
@@ -260,7 +260,7 @@ dec = numSplit[1];
             return int + '.' + dec;
         }
 
-};
+    };
 
     // Node List forEach function
 

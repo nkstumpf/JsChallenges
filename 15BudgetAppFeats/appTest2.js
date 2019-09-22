@@ -1,6 +1,3 @@
-
-
-
 ////////////// BUDGET CONTROLLER //////////////
 ///////////////////////////////////////////////
 
@@ -250,23 +247,14 @@ var UIController = (function() {
 
 // #1 STARTS HERE
 
-var formatNumber = function(num, type) {
-    var numSplit, int, dec, type;
+function formatNumber(num, type) {
+    var num, numSet1, numSet2, numSet3, numSet4, int, dec, splitDecimal, result, typeStr;
 
-    // using the "absolute" method
     num = Math.abs(num);
-    // and then the "toFixed" method
     num = num.toFixed(2);
-
-    numSplit = num.split('.');
-
-    // places the comma at the correct spot you specify
-    int = numSplit[0];
-    if (int.length > 3) {
-        int = int.substr(0, int.length - 3) + ',' + int.substr(int.length -3, 3);
-    }
-
-    dec = numSplit[1];
+    splitDecimal = num.split('.');
+    int = splitDecimal[0];
+    dec = splitDecimal[1];
 
     //////////////////////// CHALLENGE #2 FIX -0.00 BUG ////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -276,20 +264,189 @@ var formatNumber = function(num, type) {
     // this is what is causing the displayBudget function to display "-0.00" on init
     // because 0 is inherently "fasly" the ternary operator was evaluating to be an "exp" every time init ran
 
-    if (type === 'exp') {
-        return '-' + ' ' + int + '.' + dec;
-    } else if (type === 'inc') {
-        return '+' + ' ' + int + '.' + dec;
-    } else if (type === 'default') { // changed this line TEST
-        return int + '.' + dec;
-    }
+    function getTypeStr() {
+
+      if (type === 'exp') {
+
+        typeStr = '-' + ' ';
+
+      } else if (type === 'inc') {
+
+        typeStr = '+' + ' ';
+
+      } else if (type === 'default') {
+          
+        typeStr = '';
+
+      };
+
+    };
 
     // #2 ENDS HERE
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
-};
+    /* 
+    
+    There is definitely a way to combine all these functions into a single function that could handle all the parameters and be more flexible- but I was running out of time and wanted to move on to the next task.
+
+    Here is an example of what is going on inside each function:
+
+        funtion { 
+
+            numSet1 = int[0] + int[1] + int[2]; // first comma break point
+            numSet2 = int.substr(3, 3);         // second comma break point
+            numSet3 = int.substr(6, 3);         // third comma break point
+
+            getType()                           // returns the type
+
+            // return the type string ( - or + ) then "rebuild" the number with commas in correct place values
+            return result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec);
+        
+        }
+    
+    */
+
+    function uptoThousand() {
+
+        getTypeStr();
+
+        result = typeStr + num;
+
+    };
+
+    function thousands(intPos, substr) {
+
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec;
+
+    };
+
+    function tensThousands(intPos, intPos2, substr) {
+
+        numSet1 = int[intPos] + int[intPos2];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec;
+
+    };
+
+    function hundredsThousands(intPos, intPos2, intPos3, substr) {
+
+        numSet1 = int[intPos] + int[intPos2] + int[intPos3];
+        numSet2 = int.substr(substr);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + '.' + dec;
+
+    };
+
+    function millions(intPos, substr, substr2, substrConst){
+        
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+
+    };
+
+    function tensMillions(intPos, intPos2, substr, substr2, substrConst){
+
+        numSet1 = int[intPos] + int[intPos2];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+
+    };
+
+    function hundredsMillions(intPos, intPos2, intPos3, substr, substr2, substrConst){
+        
+        numSet1 = int[intPos] + int[intPos2] + int[intPos3];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+        
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec;
+
+    };
+
+    function billions(intPos, substr, substr2, substr3, substrConst){
+
+        numSet1 = int[intPos];
+        numSet2 = int.substr(substr, substrConst);
+        numSet3 = int.substr(substr2, substrConst);
+        numSet4 = int.substr(substr3, substrConst);
+
+        getTypeStr();
+
+        result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + ',' + numSet4 + '.' + dec;
+
+    };
+
+    // if number is less than a thousand (5 or 25 or 250)
+    if (int.length < 4) {
+
+        uptoThousand();
+
+    // if number is in the thousands (2,500)
+    } else if (int.length === 4) {
+
+        thousands(0, 1);
+
+    // if the number is in the tens of thousands (49,578)  
+    } else if (int.length === 5) {
+
+        tensThousands(0, 1, -3);
+
+    // if the number is in the hundreds of thousands (495,789)  
+    } else if (int.length === 6) {
+
+        hundredsThousands(0, 1, 2, -3);
+
+    // if the number is in the millions (4,957,892)
+    } else if (int.length === 7) {
+
+        millions(0, 1, 4, 3);
+
+    // if number is in the tens of millions (49,578,942)  
+    } else if (int.length === 8) {
+
+        tensMillions(0, 1, 2, 5, 3);
+
+    // if number is in the hundreds of millions (249,578,942)  
+    } else if (int.length === 9) {
+
+        hundredsMillions(0, 1, 2, 3, 6, 3);
+
+      // if the number is in the billions (2,495,789,427) 
+    } else if (int.length === 10) {
+
+        billions(0, 1, 3, 6, 3);
+
+    } else if (int.length > 10) {
+
+        console.log('Yea like you make that much...');
+
+    };
+    
+    return result;
+
+  };
 
   // #1 ENDS HERE
 
@@ -557,10 +714,6 @@ var controller = (function(budgetCtrl, UICtrl) {
 
             alert('The value field can only contain positive numbers');
 
-        } else if (input.value.length === 0) {
-
-            alert('The value field cannot be empty');
-        
         } else {
 
             // 2. Add the item to the budget controller

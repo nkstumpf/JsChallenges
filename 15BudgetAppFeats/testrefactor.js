@@ -1,37 +1,61 @@
+
 function formatNumber(num, type) {
     console.log('button was clicked');
     var num, numSet1, numSet2, numSet3, numSet4, int, dec, splitDecimal, result, p ,typeStr;
 
-    // test type
-    type = 'default';
-    console.log(type);
-
     p = document.getElementById("demo");
     p.textContent = int;
+    
+    //////////////////////
+    // TEST "TYPE":
 
+    // type = 'inc';
+    // type = 'exp';
+    type = 'default';
+    console.log('the type is: ' + type);
+
+    // TEST NUMBER:
+
+    // num = 25.45678;
+    // num = 250.45678;
+    // num = 2500.45678;
+    // num = 25000.45678;
+    // num = 250000.45678;
+    // num = 2500000.45678;
+    // num = 25000000.45678;
+    // num = 250000000.45678;
+    num = 2500000000.45678;
+
+    ///////////////////////
+  
+    num = Math.abs(num);
     num = num.toFixed(2);
     splitDecimal = num.split('.');
     int = splitDecimal[0];
     dec = splitDecimal[1];
 
     console.log('the number is: ' + int);
-    console.log('the number of characters is: ' + int.length);
+    console.log('the length is: ' + int.length);
     console.log('the decimal is: .' + dec);
 
     function getTypeStr() {
       if (type === 'exp') {
-          console.log('check type ran exp');
+          console.log('getType returned: exp');
           typeStr = '-' + ' ';
-          return typeStr;
       } else if (type === 'inc') {
-          console.log('check type ran inc');
+          console.log('getType returned: inc');
           typeStr = '+' + ' ';
-          return typeStr;
       } else if (type === 'default') {
-          console.log('check type ran default');
+          console.log('getType returned: default');
           typeStr = '';
-          return typeStr;
       }
+    };
+
+    function uptoThousand() {
+
+        getTypeStr();
+
+        result = typeStr + num;
     };
 
     function thousands(intPos, substr) {
@@ -110,12 +134,17 @@ function formatNumber(num, type) {
 
         getTypeStr();
 
-        console.log(result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + '.' + dec);
+        console.log(result = typeStr + numSet1 + ',' + numSet2 + ',' + numSet3 + ',' + numSet4 + '.' + dec);
 
     };
 
+    // if number is less than a thousand (25 or 250)
+    if (int.length < 4) {
+
+        uptoThousand();
+
     // if number is in the thousands (2,500)
-    if (int.length === 4) {
+    } else if (int.length === 4) {
 
         thousands(0, 1);
 
