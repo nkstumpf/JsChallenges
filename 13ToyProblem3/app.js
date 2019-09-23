@@ -89,7 +89,7 @@ addressing a package or email may need a customer's name, but they definitely sh
 
 // Bonus:
 
-function secureData() {
+(function secureData() {
     var pii = {
         firstName: 'John',
         lastName: 'Doe',
@@ -117,7 +117,7 @@ function secureData() {
             return pii.ssn = ssn;
         } 
     };
-};
+})();
 
 console.log('////////////////////// Bonus //////////////////////');
 _obj = secureData();
