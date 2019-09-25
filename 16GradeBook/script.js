@@ -72,6 +72,9 @@ function addStudent() {
     let first = document.getElementById('first-name').value;
     let last = document.getElementById('last-name').value;
 
+    first = capitolize(first);
+    last = capitolize(last);
+
     // generate username
     userName = generateUserName(first, last);
 
@@ -90,6 +93,11 @@ function addStudent() {
     let menu = document.getElementById('select-student');
     menu.appendChild(newItem);
 
+    // clear inputs
+
+    document.getElementById('first-name').value = '';
+    document.getElementById('last-name').value = '';
+
 };
 
 // var node = document.createElement("LI");
@@ -103,21 +111,57 @@ function addStudent() {
 
         // get first initial of first name
         firstInitial = firstName.substr(0, 1).toLowerCase();
-        console.log(firstInitial);
+        // console.log(firstInitial);
 
         // get first initial of last name
         lastNameA = lastName.substr(0, 1).toUpperCase();
-        console.log(lastNameA);
+        // console.log(lastNameA);
  
         lastNameB = lastName.substr(1).toLowerCase();
-        console.log(lastNameB);
+        // console.log(lastNameB);
 
         // let username = first initial of first name (to lower case) + last name
         username = firstInitial + lastNameA + lastNameB;
-        console.log(username);
+        // console.log(username);
 
         return username;
     }
+
+    function capitolize(string) {
+
+        // get first initial of first name
+        a = string.substr(0, 1).toUpperCase();
+        // console.log(a);
+
+        b = string.substr(1).toLowerCase();
+        // console.log(b);
+
+        return a + b;
+    };
+
+    // function for formatting names
+    // function formatName(firstName, lastName) {
+
+    //     // get first initial of first name
+    //     firstA = firstName.substr(0, 1).toUpperCase();
+    //     console.log(firstA);
+
+    //     firstB = firstName.substr(1).toLowerCase();
+    //     console.log(firstB);
+
+    //     // get first initial of last name
+    //     lastA = lastName.substr(0, 1).toUpperCase();
+    //     console.log(lastA);
+ 
+    //     lastB = lastName.substr(1).toLowerCase();
+    //     console.log(lastB);
+
+    //     // let username = first initial of first name (to lower case) + last name
+    //     properName = firstA + firstB + ' ' + lastA + lastB;
+    //     console.log(properName);
+
+    //     return properName;
+    // };
 
 ////////////// make this a function: //////////////
 
