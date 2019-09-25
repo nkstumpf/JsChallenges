@@ -40,6 +40,9 @@ What needs to happen when we push the submit button?
 
 */
 
+// variable that keeps track of who the currently active user is
+let currentUser;
+
 // create a database to hold all student info
 
 const dataBase = {
@@ -84,7 +87,6 @@ function addStudent() {
     dataBase.students.push(newStudent);
 
     // add new student to the dropdown menu
-
     let newItem = document.createElement("OPTION");
     let newItemTxt = document.createTextNode(first + ' ' + last);
 
@@ -235,7 +237,7 @@ function addRow() {
         <td>${score}</td>
     `;
     
-    console.log('row added');
+    console.log('db record created');
 
     // 2. store data in data structure
     let newAssignment = new Map();
@@ -246,9 +248,12 @@ function addRow() {
 
     let assignmentOne = [newAssignment.get('subject'), newAssignment.get('assignment'), newAssignment.get('score')];
 
+    // check who the current user is
+    compareUser(activeStudent);
+
     // change username here to be "activeStudent"
-    bJones.assignments.push(assignmentOne);
-    console.log(bJones.assignments[0]);
+    currentUser.assignments.push(assignmentOne);
+    console.log(currentUser.assignments[0]);
 
 
     
@@ -329,7 +334,45 @@ function selectStudent() {
 
     student = document.getElementById('select-student').value;
     alert(`You selected ${student}!`);
-    alert(`here are ${student}s grades:`);
+    alert(`You are currently editing: ${student}'s grades:`);
     activeStudent = student;
 
 };
+
+function compareUser(active) {
+
+    let split = activeStudent.split(' ');
+
+    let first = split[0];
+    let last = split[1];
+
+let thisUser = generateUserName(first, last);
+// console.log(thisUser);
+
+dataBase.students.forEach(function(currentValue, index){
+
+    if (currentValue.userName === thisUser) {
+        currentUser = dataBase.students[index];
+        // console.log(currentUser);
+
+    };  
+});
+
+};
+
+// to match up the active student with the correct data structure...
+// run the generate username function on active student
+// compare against dataBase.students.forEach
+
+// for each item in the students array...
+
+    // if (student[i].username === thisUser) {
+
+// loop over the array and return each item
+// dataBase.students.forEach()
+
+// then once you return each item search each one for the specified username
+
+// returnedItem.indexOf(username)
+
+// should return the corect student
