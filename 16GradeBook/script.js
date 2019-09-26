@@ -42,6 +42,7 @@ What needs to happen when we push the submit button?
 
 // variable that keeps track of who the currently active user is
 let currentUser;
+let noStudentSelected = true;
 
 // create a database to hold all student info
 
@@ -65,8 +66,6 @@ let jSmith = new Student('John', 'Smith', 'jSmith');
 let sThompson = new Student('Sarah', 'Thompson', 'sThompson');
 
 // new function for creating student on "add student" button
-
-let addStudentBtn = document.getElementById('add-student');
 
 function addStudent() {
 
@@ -99,6 +98,10 @@ function addStudent() {
 
     document.getElementById('first-name').value = '';
     document.getElementById('last-name').value = '';
+
+    // alert user they have added a new student
+
+    alert(`${first} ${last} has been added to your roster.`);
 
 };
 
@@ -221,50 +224,111 @@ dataBase.students.push(sThompson);
 
 ///////////////////////////////////////////////////
 
+function appendData(sub, asmt, scor) {
 
+    let table = document.getElementById('container');
+    let row = document.createElement('TR');
+
+    let cellOne = document.createElement('TD');
+    let cellTwo = document.createElement('TD');
+    let cellThree = document.createElement('TD');
+
+    cellOne.textContent = sub;
+    cellTwo.textContent = asmt;
+    cellThree.textContent = scor;
+
+    table.appendChild(row);
+
+    row.appendChild(cellOne);
+    row.appendChild(cellTwo);
+    row.appendChild(cellThree);
+
+};
+
+// adds data to UI and data structure
 function addRow() {
 
     event.preventDefault();
 
-    // 1. get data fron inputs
-    let subject = document.getElementById('subject').value;
-    let assignment = document.getElementById('assignment').value;
-    let score = document.getElementById('score').value;
-    let table = document.getElementById('container');
-    table.innerHTML = `
-        <td>${subject}</td>
-        <td>${assignment}</td>
-        <td>${score}</td>
-    `;
-    
-    console.log('db record created');
+    // determine if a selection needs to be made
 
-    // 2. store data in data structure
-    let newAssignment = new Map();
+    if (noStudentSelected === true || activeStudent === 'select') {
 
-    newAssignment.set('subject', subject);
-    newAssignment.set('assignment', assignment);
-    newAssignment.set('score', score);
+        alert('Please select a student to edit grades');
 
-    let assignmentOne = [newAssignment.get('subject'), newAssignment.get('assignment'), newAssignment.get('score')];
+    } else if (subject.value === "" || assignment.value === "" || score.value === "") {
 
-    // check who the current user is
-    compareUser(activeStudent);
+        alert('Incomplete entry. Please fill out all required data before submitting');
+        
+    } else {
 
-    // change username here to be "activeStudent"
-    currentUser.assignments.push(assignmentOne);
-    console.log(currentUser.assignments[0]);
+        // 1. get data fron inputs
+        let subject = document.getElementById('subject').value;
+        let assignment = document.getElementById('assignment').value;
+        let score = document.getElementById('score').value;
+
+        // let table = document.getElementById('container');
+        // table.innerHTML = `
+        //     <td>${subject}</td>
+        //     <td>${assignment}</td>
+        //     <td>${score}</td>
+        // `;
+
+        appendData(subject, assignment, score);
+        
+        console.log('db record created');
+
+        // 2. store data in data structure
+        let newAssignment = new Map();
+
+        newAssignment.set('subject', subject);
+        newAssignment.set('assignment', assignment);
+        newAssignment.set('score', score);
+
+        let assignmentOne = [newAssignment.get('subject'), newAssignment.get('assignment'), newAssignment.get('score')];
+
+        // check who the current user is
+        compareUser(activeStudent);
+
+        // push new assignment into the array
+        currentUser.assignments.push(assignmentOne);
+        console.log(currentUser.assignments[0]);
 
 
-    
-    // 3. update UI
+        
+        // 3. update UI
 
-    // clear input fields
-    document.getElementById('subject').value = '';
-    document.getElementById('assignment').value = '';
-    document.getElementById('score').value = '';
+        // clear input fields
+        document.getElementById('subject').value = '';
+        document.getElementById('assignment').value = '';
+        document.getElementById('score').value = '';
+
+    }
     
  };
+
+ // deletes data from UI and data structure
+ function deleteRow() {
+
+    let nodeList = document.getElementsByTagName('TR');
+    let lastEntry = nodeList[nodeList.length -1];
+
+    lastEntry.remove();
+
+    // add function that will alse remove corresponding data from datastructure
+
+    compareUser(activeStudent);
+
+    // push new assignment into the array
+    currentUser.assignments.pop();
+
+    console.log('db record removed');
+
+    // fix bug where continuing to press the button removes the table header
+ }
+ 
+//  let list = document.getElementsByTagName('TR');
+//  let lastEntry = (list.length -1);
 
 // test
 // console.log(newAssignment.get('subject'));
@@ -272,7 +336,7 @@ function addRow() {
 // console.log(newAssignment.get('score'));
 
 
-// create an IIFE function that adds new UI elements to the page on load
+// create an IIFE function that dynamically adds new UI elements to the page on load
 
 (function loadHtml(){
 
@@ -284,7 +348,7 @@ function addRow() {
         <div style="margin: 5% 5%;">
             <p style="margin-bottom: 2%;">Add student</p>
             <input id= "first-name" placeholder="first name" type="text">
-            <input id="last-name" placeholder="first name" type="text">
+            <input id="last-name" placeholder="last name" type="text">
             <input type="submit" value="Add Student" id="add-student" onclick="return addStudent()">
             <p style="margin: 2% 0 2% 0;">Select student</p>
             <select id="select-student" onchange="selectStudent()">
@@ -307,6 +371,8 @@ function addRow() {
             
             <input type="submit" value="Submit" id="submit" onclick="return addRow()">
         </form>
+        <p style="margin: 5% 0 2% 5%">Delete Last Entry</p>
+        <input style="margin: 0 0 2% 5%" type="submit" value="Delete" id="delete-row" onclick="return deleteRow()">
         <table>
             <thead>
                 <tr>
@@ -333,9 +399,20 @@ let activeStudent;
 function selectStudent() {
 
     student = document.getElementById('select-student').value;
-    alert(`You selected ${student}!`);
-    alert(`You are currently editing: ${student}'s grades:`);
-    activeStudent = student;
+
+    if (student === 'select') {
+
+        alert('Please select a student to edit grades');
+        noStudentSelected = true;
+
+    } else {
+
+        alert(`You selected ${student}!`);
+        // alert(`You are currently editing: ${student}'s grades:`);
+        activeStudent = student;
+        noStudentSelected = false;
+
+    };
 
 };
 
