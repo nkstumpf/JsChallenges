@@ -224,6 +224,31 @@ dataBase.students.push(sThompson);
 
 ///////////////////////////////////////////////////
 
+// create a function that populates all data to table when student is selected
+
+function printData() {
+
+    // pass in the active students assignments subject, assignment, score
+    let table = document.getElementById('container');
+    let row = document.createElement('TR');
+
+    let cellOne = document.createElement('TD');
+    let cellTwo = document.createElement('TD');
+    let cellThree = document.createElement('TD');
+
+    cellOne.textContent = currentUser.assignments[0];
+    cellTwo.textContent = currentUser.assignments[1];
+    cellThree.textContent = currentUser.assignments[2];
+
+    table.appendChild(row);
+
+    row.appendChild(cellOne);
+    row.appendChild(cellTwo);
+    row.appendChild(cellThree);
+}
+
+
+
 function appendData(sub, asmt, scor) {
 
     let table = document.getElementById('container');
@@ -292,7 +317,7 @@ function addRow() {
 
         // push new assignment into the array
         currentUser.assignments.push(assignmentOne);
-        console.log(currentUser.assignments[0]);
+        // console.log(currentUser.assignments[0]);
 
 
         
