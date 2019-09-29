@@ -1,63 +1,7 @@
 
-// things to fix / add:
-
-// 1. input fields:
-
-    // limit score input to 2 digits
-    // check for special characters added
-    // re-focus on subject field after submit
-
-// 2. alert when user has deleted an entry
-
-// 3. calculate GPA function
-// 4. calculate GPA by subject
-
-
-/*
-
-Planning the app
-
-on page load:
-
-1. prompt to add or select student
-
-2. add student
-
-3. select student
-
-4. submit data
-
-5. update UI
-
-What needs to happen when we push the submit button?
-
-* Create a data structure to store our data that can be organized for averaging grades and different students
-
-1. Event listener
-
-2. Get the value of each input field and store it
-
-3. push data to data stucture
-
-4. we need methods of that data stucture that will return the data we want and update is accordingly
-
-5. get the dom elements where we want to post the data 
-
-6. post the data to the correct dom elements
-
-7. add a 'remove item' button that gets created with the new data
-
-// extra feature ideas: 
-
-// add the ability to add new students to your class and store all their data separately
-// add dropdown menu with all the students in your class that when selected would bring up that students scores
-// add ability to sort your table by subject or grade
-
-*/
 
 // variable that keeps track of who the currently active user is
 let currentUser;
-// active student variable will hold whichever student is currently active
 let activeStudent;
 let noStudentSelected = true;
 
@@ -74,6 +18,51 @@ function Student(firstName, lastName, userName) {
     this.last = lastName;
     this.userName = userName;
     this.assignments = [];
+
+};
+
+// create function to get gpa 
+
+function getGPA() {
+        
+    let scoresArr = [];
+    let asnmtsArr = currentUser.assignments;
+    let table = document.getElementById('average');
+
+    for (let i = 0; i < asnmtsArr.length; i++) {
+        scoresArr.push(parseInt(asnmtsArr[i].score));
+
+        console.log('scores array: ' + scoresArr);
+    };
+
+    function getSum(total, num) {
+        return total + num;
+    };
+
+    if (scoresArr.length === 0) {
+
+        table.innerHTML = `${currentUser.userName}'s GPA is: 0`;
+
+    } else {
+
+    console.log(scoresArr);
+    let length = asnmtsArr.length;
+    console.log('the length is: ' + length);
+    let sum = scoresArr.reduce(getSum);
+    console.log('the sum is: ' + sum);
+
+    let average = Math.round(sum / length);
+    console.log('your grade average is: ' + average);
+
+    function displayGPA() {
+        table.style = "display: block;";
+        table.innerHTML = `${currentUser.userName}'s GPA is: ${average}`;
+    };
+
+    displayGPA();
+
+    };
+
 };
 
 // create new student to hold student data (when add new student form is submitted)
@@ -122,11 +111,6 @@ function addStudent() {
 
 };
 
-// var node = document.createElement("LI");
-//   var textnode = document.createTextNode("Water");
-//   node.appendChild(textnode);
-//   document.getElementById("myList").appendChild(node);
-
     // function for formatting username:
 
     function generateUserName(firstName, lastName) {
@@ -161,108 +145,6 @@ function addStudent() {
         return a + b;
     };
 
-    // get gpa 
-
-    // function getGPA() {
-    //     let scoresArr;
-    //     let myArr = currentUser.assignments;
-
-    //     for (let i = 0; i < myArr.length; i++) {
-    //         scoresArr = myArr[i].score;
-
-    //         console.log(scoresArr);
-    //     };
-
-    //     let length = myArr.length;
-    //     let sum = scoresArr.reduce(getSum); // reduce not working here
-    //     console.log(sum);
-
-    //     function getSum(total, num) {
-    //         return total + num;
-    //     };
-
-    //     let gpa = sum / length;
-
-    //     console.log(gpa);
-
-
-    // };
-
-// var numbers = [175, 50, 25];
-
-// document.getElementById("demo").innerHTML = numbers.reduce(myFunc);
-
-// function myFunc(total, num) {
-//   return total + num;
-
-    // function for formatting names
-    // function formatName(firstName, lastName) {
-
-    //     // get first initial of first name
-    //     firstA = firstName.substr(0, 1).toUpperCase();
-    //     console.log(firstA);
-
-    //     firstB = firstName.substr(1).toLowerCase();
-    //     console.log(firstB);
-
-    //     // get first initial of last name
-    //     lastA = lastName.substr(0, 1).toUpperCase();
-    //     console.log(lastA);
- 
-    //     lastB = lastName.substr(1).toLowerCase();
-    //     console.log(lastB);
-
-    //     // let username = first initial of first name (to lower case) + last name
-    //     properName = firstA + firstB + ' ' + lastA + lastB;
-    //     console.log(properName);
-
-    //     return properName;
-    // };
-
-////////////// make this a function: //////////////
-
-    // 1. create a function for formatting new usernames
-
-        // 1. get first name of student from input field
-        // 2. get last name 
-        // 3. get first initial of first name
-        // 4. get first initial of last name (to upper case) substr method
-        // 4. let username = first initial of first name (to lower case) + last name
-
-    // 2. create new student instance using the username as the variable name
-
-    // 3. add new student to dropdown menu
-    
-    // 4. add new student to dataBase
-
-////////////// make this a function: //////////////
-
-// when assignment form is submitted...
-
-// 1. create a new data structure to hold assignment data
-// let newAssignment = new Map();
-
-// 2. capture data
-// newAssignment.set('subject', 'Math');
-// newAssignment.set('assignment', 'Take home quiz');
-// newAssignment.set('score', 92);
-
-// let anotherNewAssignment = new Map();
-
-// anotherNewAssignment.set('subject', 'Writing');
-// anotherNewAssignment.set('assignment', 'Book report');
-// anotherNewAssignment.set('score', 88);
-
-// 3. store data as a new array
-
-// let assignmentOne = [newAssignment.get('subject'), newAssignment.get('assignment'), newAssignment.get('score')];
-// let assignmentTwo = [anotherNewAssignment.get('subject'), anotherNewAssignment.get('assignment'), anotherNewAssignment.get('score')];
-
-// 4. push array to the student it was created for
-
-// bJones.assignments.push(assignmentOne, assignmentTwo);
-
-// 5. push student data to db
 
 dataBase.students.push(bJones);
 dataBase.students.push(jSmith);
@@ -271,9 +153,6 @@ dataBase.students.push(sThompson);
 
 // 3. update the UI
 
-
-
-///////////////////////////////////////////////////
 
 // create a function that populates all data to table when student is selected
 
@@ -346,13 +225,6 @@ function addRow() {
         let assignment = document.getElementById('assignment').value;
         let score = document.getElementById('score').value;
 
-        // let table = document.getElementById('container');
-        // table.innerHTML = `
-        //     <td>${subject}</td>
-        //     <td>${assignment}</td>
-        //     <td>${score}</td>
-        // `;
-
         appendData(subject, assignment, score);
         
         console.log('db record created');
@@ -370,16 +242,18 @@ function addRow() {
             score: newAssignment.get('score')
         };
 
-        // check who the current user is
+        // 3. check who the current user is
         compareUser(activeStudent);
 
-        // push new assignment into the array
+        // 4. push new assignment into the array
         currentUser.assignments.push(assignmentOne);
         // console.log(currentUser.assignments[0]);
 
 
         
-        // 3. update UI
+        // 5. update UI
+
+        getGPA();
 
         // clear input fields
         document.getElementById('subject').value = '';
@@ -408,9 +282,11 @@ function addRow() {
     // push new assignment into the array
     currentUser.assignments.pop();
 
-    console.log('db record removed');
+    console.log('db record deleted');
 
     };
+
+    getGPA();
  }
 
  function clearUI() {
@@ -434,8 +310,9 @@ function addRow() {
     let documentBody = document.getElementsByTagName("BODY")[0];
     documentBody.innerHTML = `
     
-        <h1>Welcome to Grade Book!</h1>
+        <h1 style="background-color:black; color:white">.: Grade Book App :.</h1>
         <h2 style="margin: 5%;">To update grades, please add or select a student:</h2>
+        <div id='profile'></div>
         <div style="margin: 5% 5%;">
             <p style="margin-bottom: 2%;">Add student</p>
             <input id= "first-name" placeholder="first name" type="text">
@@ -476,7 +353,7 @@ function addRow() {
             </tbody>
         </table>
         <h3 id="average" style="display: none;">GPA: <span id="gpa">%Average%</span></h3>    
-        <script src="script.js"></script>
+        <script src="test2.js"></script>
 `;
 
 
@@ -493,10 +370,15 @@ function selectStudent() {
         alert('Please select a student to edit grades');
         noStudentSelected = true;
 
-    } else {
+        // update UI
 
         let heading = document.getElementsByTagName('H2')[0];
-        heading.innerHTML = `Currently Editing: ${student}'s grades.`;
+        heading.innerHTML = 'To update grades, please add or select a student:';
+        let newDiv = document.getElementById('profile');
+        newDiv.innerHTML = '';
+        document.getElementById('average').style="display:none";
+
+    } else {
 
         alert(`You selected ${student}!`);
         // alert(`You are currently editing: ${student}'s grades:`);
@@ -505,6 +387,29 @@ function selectStudent() {
         compareUser(activeStudent);
         clearUI();
         printData();
+        getGPA();
+
+        let heading = document.getElementsByTagName('H2')[0];
+        heading.innerHTML = `Student profile:`;
+
+        let newDiv = document.getElementById('profile');
+        
+        newDiv.innerHTML = `
+        <table style="width:50%; margin-left: 5%">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td>${currentUser.first}</td>
+                <td>${currentUser.last}</td>
+                <td>${currentUser.userName}</td>
+            </tbody>
+        </table>
+        `;
 
     };
 
@@ -530,20 +435,3 @@ let thisUser = generateUserName(first, last);
     });
 
 };
-
-// to match up the active student with the correct data structure...
-// run the generate username function on active student
-// compare against dataBase.students.forEach
-
-// for each item in the students array...
-
-    // if (student[i].username === thisUser) {
-
-// loop over the array and return each item
-// dataBase.students.forEach()
-
-// then once you return each item search each one for the specified username
-
-// returnedItem.indexOf(username)
-
-// should return the corect student
